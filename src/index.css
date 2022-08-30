@@ -1,0 +1,44 @@
+.main{
+  height: 100vh;
+}
+
+.users {
+  background-color: #fff;
+  position: relative;
+  height: 100%;
+  top: 60px;
+
+}
+.user-heading{
+  background-color: #fff;
+  width: 25%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  border-bottom: 1px solid #000;
+
+}
+
+.user-list {
+  width: 100%;
+  background-color: #fff;
+  position: absolute;
+  overflow: auto;
+  z-index: 2;
+  left: 0;
+  height: 100vh;
+}
+
+.right {
+  width: 25%;
+  position: fixed;
+  right: 0;
+  overflow: auto;
+  top: 0;
+}
+.log-out-btn{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}

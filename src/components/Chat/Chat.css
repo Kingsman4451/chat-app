@@ -1,0 +1,22 @@
+.chat {
+  background-color: rgb(255, 255, 255);
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 25%;
+  width: 50%;
+  height: 100vh;
+
+}
+
+.chat-main {
+  padding: 20px 25px;
+  position: relative;
+  top: 0;
+  height: calc(100vh - 120px);
+  overflow-y: scroll;
+  background: url('../../assets/images/background.jpg') no-repeat center/cover;
+  display: flex;
+  flex-direction: column;
+}
+
