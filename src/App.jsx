@@ -34,7 +34,7 @@ const App = () => {
 
 
   useEffect(() => {
-    if(!token && !newMessage && !messageData) return
+    if(!token && !newMessage) return
     getUsers(token).then(res => setUsers(res.data)).catch( err=> {
       console.log(err);
     })
