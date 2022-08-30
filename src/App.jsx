@@ -48,7 +48,6 @@ const App = () => {
     loginUser(username, password, repeat_password).then((res) => {
       setToken(res.data.token)
       localStorage.setItem('token', res.data.token)
-      console.log(checker)
     }).catch( err=> {
       console.log(err);
     })
@@ -77,7 +76,6 @@ const App = () => {
     }).catch( err=> {
       console.log(err);
     })
-    console.log(newMessage);
   },[messageClick])
 
 
