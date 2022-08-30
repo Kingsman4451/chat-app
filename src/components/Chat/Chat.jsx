@@ -167,6 +167,7 @@ const Chat = () => {
               setClick(click + 1);
               setTimeout(() => {
                 setNewMessage("");
+                setMessageData('');
                 chatDiv.current.scrollTo({
                   top: chatDiv.current.scrollHeight,
                   behavior: "smooth",
