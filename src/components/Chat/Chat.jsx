@@ -79,6 +79,7 @@ const Chat = () => {
                                   setClick(click + 1),
                                     setFileName(item.downloadLink);
                                 }}
+                                key={item.dataId}
                               >
                                 <img src={dowloadPng} width="30"/>
                               </a>
@@ -102,18 +103,6 @@ const Chat = () => {
           className="chat-footer"
           onSubmit={(evt) => {
             evt.preventDefault();
-            if (evt.key === "Enter") {
-              handleSendMessage();
-              setMessageClick(messageClick + 1);
-              setClick(click + 1);
-              setTimeout(() => {
-                setNewMessage("");
-                chatDiv.current.scrollTo({
-                  top: chatDiv.current.scrollHeight,
-                  behavior: "smooth",
-                });
-              }, 200);
-            }
           }}
         >
           <button className="icon-btn" type="button">
