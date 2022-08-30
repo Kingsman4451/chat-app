@@ -19,7 +19,7 @@ const App = () => {
   const [fileName, setFileName] = useState("")
   const [formData, setFormData] = useState("")
   const [messageData, setMessageData] = useState("")
-  const [newMessage, setNewMessage] = useState("message")
+  const [newMessage, setNewMessage] = useState("")
   const [messages, setMessages] = useState([])
   const [data, setData] = useState([])
 
@@ -34,7 +34,7 @@ const App = () => {
 
 
   useEffect(() => {
-    if(!token && !newMessage) return
+    if(!token) return
     getUsers(token).then(res => setUsers(res.data)).catch( err=> {
       console.log(err);
     })
