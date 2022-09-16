@@ -17,7 +17,7 @@ const Users = () => {
           {users.map((user) => {
             return (
               <li className="list-item d-flex align-items-center gap-3 py-3 px-3 border-bottom" key={user.userId}>
-                <img className="avatar-img d-block" src={user.avatar ? `http://localhost:5000${user.avatar}` : defaultAvatar} alt="" width='60' height='60'/>
+                <img className="avatar-img d-block" src={user.avatar ? `https://custom--chat.herokuapp.com${user.avatar}` : defaultAvatar} alt={user.username} width='60' height='60'/>
                 <div className="item-content">
                   <p className="fw-bold fs-4 m-0">{user.username}</p>
                   <a className="text-decoration-none" href={`tel:${user.contact}`}>{user.contact}</a>

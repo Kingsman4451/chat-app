@@ -1,7 +1,7 @@
 import axios from "axios"
 
 
-const URL = "https://chat-a--app.herokuapp.com"
+const URL = "https://custom--chat.herokuapp.com"
 
 export const Api = {
   getUsers: (token)=>{

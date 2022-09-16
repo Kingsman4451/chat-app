@@ -2,13 +2,16 @@ import React, { useState, useEffect} from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Api } from '../URL/Api';
 import context from "./context";
+import { io } from 'socket.io-client';
 import Login from './components/Login/Login'
 import PrivateRoute from './components/private/PrivateRoute';
 import Register from './components/Register/Register';
 import Main from './components/Main/Main';
 
+const socket = io("http://localhost:5000")
 
 const App = () => {
+  
   const cont = context.context;
   const { getUserId, getMessages, postMessage, getUsers, loginUser, registerUser } = Api;
   const [username, setUsername] = useState("")
@@ -22,6 +25,8 @@ const App = () => {
   const [newMessage, setNewMessage] = useState("")
   const [messages, setMessages] = useState([])
   const [data, setData] = useState([])
+  const [datum, setDatum] = useState([])
+
 
   
   const [token, setToken] = useState(localStorage.getItem("token"))
@@ -39,7 +44,7 @@ const App = () => {
       console.log(err);
     })
     getMessages(token).then(res => {setMessages(res.data[0]), setData(res.data[1])}).catch( err=> {  console.log(err); });
-  })
+  },[datum, click, token])
 
   useEffect(() => {
     if(token) setChecker(true)
@@ -64,21 +69,26 @@ const App = () => {
     if(token) return
     registerUser(formData).then((res) =>{
       setToken(res.data.token)
+      socket.emit("new user", res.data.data)
+      console.log(datum);
       if(token) setChecker(true)
     }).catch( err=> {
       console.log(err);
     })
   },[registerClick])
 
+  socket.on("new user", (data)=>{setDatum(data)})
+  
   useEffect(() => {
     if(!newMessage) return
     postMessage(messageData, token).then((res) => {
+      socket.emit("new message", res.data.data)
     }).catch( err=> {
       console.log(err);
     })
   },[messageClick])
 
-
+  socket.on("new message", (data)=>{setClick(data)})
 
   const values = {
     username,

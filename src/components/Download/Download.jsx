@@ -13,7 +13,7 @@ const Download = () => {
           return (
             <li className="download-list-item" key={item.dataId}>
               <a
-                href={`https://chat-a--app.herokuapp.com/download/${item.downloadLink}`}
+                href={` https://custom--chat.herokuapp.com/download/${item.downloadLink}`}
                 onClick={() => {
                   setClick(click + 1), setFileName(item.downloadLink);
                 }}

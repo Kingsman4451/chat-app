@@ -19,7 +19,7 @@ const Profile = () => {
         if (user.userId == userId) {
           return (
             <div className="profile text-center pt-3 pb-3 border-bottom" key={userId}>
-              <img className="avatar-img d-inline-block mb-2" src={user.avatar ? `http://localhost:5000${user.avatar}` : defaultAvatar} alt="" width='80' height='80'/>
+              <img className="avatar-img d-inline-block mb-2" src={user.avatar ? `https://custom--chat.herokuapp.com${user.avatar}` : defaultAvatar} alt="" width='80' height='80'/>
               <p className="user-name fw-bold h2 m-0 mb-2">{user.username}</p>
               <a className="text-decoration-none" href={`tel:${user.contact}`}>{`Tel: ${user.contact}`}</a>
             </div>

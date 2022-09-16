@@ -102,7 +102,7 @@ const Register = () => {
           <label>
             <span className="zmdi zmdi-smartphone"></span>
             <input
-              type="email"
+              type="tel"
               id="emailInput"
               placeholder="Your contact"
               value={contact}

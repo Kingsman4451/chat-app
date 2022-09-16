@@ -1,8 +1,10 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState, useEffect } from "react";
 import context from "../../context";
 import "./Chat.css";
+import { io } from 'socket.io-client';
 import defaultAvatar from "../../assets/images/default-avatar.png";
 import dowloadPng from "../../assets/images/download.png"
+const socket = io("https://custom--chat.herokuapp.com")
 
 const Chat = () => {
   let { values } = useContext(context.context);
@@ -13,12 +15,28 @@ const Chat = () => {
     newMessage,
     setNewMessage,
     data,
+    users,
     messageClick,
     setMessageClick,
     click,
     setClick,
   } = values;
   const chatDiv = useRef();
+  const [typing, setTyping]= useState(false)
+  const [id, setId]= useState(false)
+
+  const user = users.find(user=>{
+    user.userId == id
+  })
+
+  useEffect(() => {
+    setTimeout(() => {
+      chatDiv.current.scrollTo({
+        top: chatDiv.current.scrollHeight,
+        behavior: "smooth",
+    })
+    }, 100);
+  },[click])
 
   const handleSendMessage = () => {
     let data = new FormData();
@@ -26,11 +44,14 @@ const Chat = () => {
     setMessageData(data);
   };
 
+
+
   return (
     <>
       <div className="chat col-6 gx-0">
-        <div className="chat-header ps-2 pt-3 bg-white pb-2 border-bottom">
-          <h2 className="chat-title m-0">Web Group N-29</h2>
+        <div className="chat-header position-relative ps-2 pt-1 bg-white pb-4 border-bottom">
+          <h2 className="chat-title d-block m-0">Web Group N-29</h2>
+
         </div>
         <ul className="chat-main list-unstyled" ref={chatDiv}>
           {messages.map((message, index) => {
@@ -50,7 +71,7 @@ const Chat = () => {
                   <img
                     src={
                       message.user.avatar
-                        ? `http://localhost:5000${message.user.avatar}`
+                        ? `https://custom--chat.herokuapp.com/${message.user.avatar}`
                         : defaultAvatar
                     }
                     alt="profile-picture"
@@ -67,14 +88,14 @@ const Chat = () => {
                         className="msg object-class d-inline-block mb-2"
                         width="500"
                         height="100%"
-                        data={`https://chat-a--app.herokuapp.com/${message.body}`}
+                        data={` https://custom--chat.herokuapp.com/${message.body}`}
                       ></object>
                       {data.map((item) => {
                         return (
                           <>
                             {message.messageId == item.messageId ? (
                               <a
-                                href={`https://chat-a--app.herokuapp.com/download/${item.downloadLink}`}
+                                href={` https://custom--chat.herokuapp.com/download/${item.downloadLink}`}
                                 onClick={() => {
                                   setClick(click + 1),
                                     setFileName(item.downloadLink);
@@ -131,6 +152,15 @@ const Chat = () => {
             value={newMessage}
             onChange={(e) => {
               setNewMessage(e.target.value);
+              let timeId
+              if(e.keyCode != 13 && timeId) return
+              socket.emit('typing', {userId})
+              socket.on("typing", ({userId})=>{setId(userId)})
+              setTyping(true)
+              timeId = setTimeout(()=>{
+                timeId = undefined
+                setTyping(false)
+              }, 2000)
             }}
             autoComplete="off"
           />
@@ -168,11 +198,9 @@ const Chat = () => {
               setTimeout(() => {
                 setNewMessage("");
                 setMessageData('');
-                chatDiv.current.scrollTo({
-                  top: chatDiv.current.scrollHeight,
-                  behavior: "smooth",
-                });
+                
               }, 200);
+              
             }}
           >
             <svg
